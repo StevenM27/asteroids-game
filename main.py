@@ -12,12 +12,18 @@ def main():
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
 
-    # Create Player
-    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-
     # Restrict to 60 FPS
     clock = pygame.time.Clock()
     dt = 0
+
+    # Create groups for managing our game objects
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Player.containers = (updatable, drawable)
+
+    # Create Player
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     # GAME LOOP
     while True:
@@ -27,10 +33,16 @@ def main():
 
         pygame.Surface.fill(screen, (0, 0, 0))
 
+        # 60 FPS
         dt = clock.tick(60) / 1000
 
-        player.draw(screen)
-        player.update(dt)
+        # Update all objects
+        updatable.update(dt)
+
+        # Draw all objects
+        for obj in drawable:
+            obj.draw(screen)
+
         pygame.display.flip()
 
 
