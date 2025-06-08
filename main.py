@@ -1,5 +1,6 @@
 import pygame
 from constants import *
+from player import *
 
 
 def main():
@@ -10,6 +11,9 @@ def main():
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
+
+    # Create Player
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
     # Restrict to 60 FPS
     clock = pygame.time.Clock()
@@ -23,6 +27,7 @@ def main():
 
         pygame.Surface.fill(screen, (0, 0, 0))
 
+        player.draw(screen)
         dt = clock.tick(60) / 1000
         pygame.display.flip()
 
